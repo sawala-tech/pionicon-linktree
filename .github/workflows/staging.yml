@@ -1,0 +1,16 @@
+name: Vercel Preview Staging Deployment
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    environment: Staging
+    # Run actions action if actor is not andrijunaedi or aldycavalera
+    if: ${{ (github.actor != 'andrijunaedi') && (github.actor != 'aldycavalera') }}
+    steps:
+      - name: Trigger CURL Hook
+        run: curl -X POST -d {} ${{ vars.VERCEL_DEPLOY_HOOK }}
